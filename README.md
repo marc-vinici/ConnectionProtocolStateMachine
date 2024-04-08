@@ -8,9 +8,12 @@ Através de testes unitários é possível validar 2 cenários:
 #Como Executar?
 
 #Pré-requisitos:
+
     gtest
     cmake
 
 Após reposítorio clonado, apenas execute os scripts de build e run_tests:
+
 $ ./scripts/build.sh
+
 $ ./scripts/run_tests.sh
