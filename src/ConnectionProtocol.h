@@ -1,45 +1,39 @@
 #pragma once
+#include <chrono>
+#include <concepts>
+#include <functional>
 #include <iostream>
+#include <map>
+#include <print>
+#include <string>
 
-class ConnectionProtocol
-{
+class ConnectionProtocol {
+ public:
+  ConnectionProtocol(){};
 
-public:
-    ConnectionProtocol() : state_(State::kLinkDown)
-    {
-        LinkDown();
-    }
+  enum class State { kLinkDown = 0, kSendStart, kSendConfig, kSendKeepalive };
 
-    enum class State
-    {
-        kLinkDown = 0,
-        kSendStart,
-        kSendConfig,
-        kSendKeepalive
-    };
+  enum class Event {
+    kInterfaceNok = 0,
+    kInterfaceOk,
+    kPacketNok,
+    kPacketOk,
+    kPacketNotReceived,
+  };
 
-    enum class Event
-    {
-        kInterfaceNok = 0,
-        kInterfaceOk,
-        kPacketNok,
-        kPacketOk,
-        kPacketNotReceived,
-    };
+  [[nodiscard]] auto processEvent(State state, Event event) -> const State &;
 
-    auto processEvent(State state, Event event) -> State &;
+ private:
+  State state_{State::kLinkDown};
 
-private:
-    State state_;
-    
-    auto set_state(State state) -> void;
-    auto get_state() -> State &;
+  auto set_state(State, Event) -> void;
+  auto get_state() -> State &;
 
-    auto LinkDown() -> void;
+  auto LinkDown() -> void;
 
-    auto SendStart() -> void;
+  auto SendStart() -> void;
 
-    auto SendConfig() -> void;
+  auto SendConfig() -> void;
 
-    auto SendKeepalive() -> void;
+  auto SendKeepalive() -> void;
 };
