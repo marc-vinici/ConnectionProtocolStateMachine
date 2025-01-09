@@ -21,7 +21,7 @@ class ConnectionProtocol {
     kPacketNotReceived,
   };
 
-  [[nodiscard]] auto processEvent(Event event) -> const State &;
+  auto processEvent(Event event) -> const State &;
 
  private:
   State state_{State::kLinkDown};
