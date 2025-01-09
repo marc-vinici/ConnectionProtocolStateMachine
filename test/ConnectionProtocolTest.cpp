@@ -28,7 +28,7 @@ TEST_F(ConnectionProtocolTest, TransitionHappyPath)
         auto event = std::get<1>(state_event);
         auto next_state = std::get<2>(state_event);
 
-        ASSERT_THAT(protocol.processEvent(current_state, event), Eq(next_state));
+        ASSERT_THAT(protocol.processEvent(event), Eq(next_state));
     }
 }
 
@@ -54,6 +54,6 @@ TEST_F(ConnectionProtocolTest, TransitionConnectionFailed)
         auto event = std::get<1>(state_event);
         auto next_state = std::get<2>(state_event);
 
-        ASSERT_THAT(protocol.processEvent(current_state, event), Eq(next_state));
+        ASSERT_THAT(protocol.processEvent(event), Eq(next_state));
     }
 }

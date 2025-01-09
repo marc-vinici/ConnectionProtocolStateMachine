@@ -21,19 +21,24 @@ class ConnectionProtocol {
     kPacketNotReceived,
   };
 
-  [[nodiscard]] auto processEvent(State state, Event event) -> const State &;
+  [[nodiscard]] auto processEvent(Event event) -> const State &;
 
  private:
   State state_{State::kLinkDown};
 
-  auto set_state(State, Event) -> void;
+  auto set_state(State newState, Event cause) -> void;
   auto get_state() -> State &;
 
-  auto LinkDown() -> void;
+  [[nodiscard]] auto stateToString(State state) const -> std::string;
+  [[nodiscard]] auto eventToString(Event event) const -> std::string;
 
-  auto SendStart() -> void;
+  auto logTransition(State oldState, State newState, Event cause) -> void;
 
-  auto SendConfig() -> void;
+  auto handleLinkDown() -> void;
 
-  auto SendKeepalive() -> void;
+  auto handleSendStart() -> void;
+
+  auto handleSendConfig() -> void;
+
+  auto handleSendKeepalive() -> void;
 };
